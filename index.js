@@ -28,6 +28,6 @@ app.use('/password/', passwordRouter);
 
 const APP_PORT = 8080;
 
-app.listen(APP_PORT, () => {
+app.listen(process.env.PORT || APP_PORT, () => {
   console.log(`Servidor iniciado na porta ${APP_PORT}`);
 });
