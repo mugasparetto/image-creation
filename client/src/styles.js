@@ -9,8 +9,7 @@ export const Container = styled.div`
 
 export const Content = styled.div`
   width: 100%;
-  max-width: ${(props) => (props.isEditing ? '1366px' : '400px')};
-  ${'' /* min-height: ${(props) => (props.isEditing ? '540px' : '0px')}; */}
+  max-width: ${(props) => (props.isEditing ? '1366px' : '800px')};
   margin: 30px;
   background: #fff;
   border-radius: 4px;
