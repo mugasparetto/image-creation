@@ -1,6 +1,6 @@
 import axios from 'axios';
 
-const API_URL = 'http://localhost:8080/password/';
+const API_URL = 'https://image-creation.herokuapp.com/password/';
 
 const verifyPassword = async (password) => {
   try {
