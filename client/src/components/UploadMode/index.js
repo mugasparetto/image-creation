@@ -3,18 +3,21 @@ import React, { useState } from 'react';
 import { uniqueId } from 'lodash';
 import filesize from 'filesize';
 
+import { Password, TextField, Verify } from './styles.js';
+
 import Upload from '../Upload/upload';
 import FileList from '../FileList/FileList';
 import CompositionMaster from '../CompositionMaster';
 
 import * as api from '../../services/removeBgService';
-import imageExample from '../../services/base64Example';
+import * as passwordService from '../../services/passwordService';
 
 export default function UploadMode({ shouldShowToolBar, shouldEdit }) {
   const [uploadedFiles, setUploadedFiles] = useState([]);
   const [noBgImages, setNoBgImages] = useState([]);
   const [isLoading, setIsLoading] = useState(false);
   const [shouldShowError, setShouldShowError] = useState(false);
+  const [isCorrectPassword, setIsCorrectPassword] = useState(false);
 
   const handleUpload = (files) => {
     const upFiles = files.map((file) => ({
@@ -56,8 +59,7 @@ export default function UploadMode({ shouldShowToolBar, shouldEdit }) {
     let containError = false;
 
     await Promise.all(
-      uploadedFiles.map(async (file, index) => {
-        // --------API--------;
+      uploadedFiles.map(async (file) => {
         const base64 = await getBase64(file.file);
         const response = await api.getImageWithoutBg(base64);
         if (response instanceof Error) {
@@ -70,60 +72,9 @@ export default function UploadMode({ shouldShowToolBar, shouldEdit }) {
           'data:image/png;base64,' + arrayBufferToBase64(response.data);
         console.log(string);
         images.push(string);
-
-        //-------- SHAMPOO --------
-        // switch (index) {
-        //   case 0:
-        //     images.push(imageExample.getShampoo1());
-        //     break;
-        //   case 1:
-        //     images.push(imageExample.getShampoo2());
-        //     break;
-        //   default:
-        //     images.push(imageExample.getShampoo3());
-        //     break;
-        // }
-
-        //-------- FRALDAS --------
-        // switch (index) {
-        //   case 0:
-        //     images.push(imageExample.getDiaper1());
-        //     break;
-        //   case 1:
-        //     images.push(imageExample.getDiaper2());
-        //     break;
-        //   case 2:
-        //     images.push(imageExample.getDiaper3());
-        //     break;
-        //   default:
-        //     images.push(imageExample.getDiaper4());
-        //     break;
-        // }
-
-        //-------- DESODORANTE --------
-        // switch (index) {
-        //   case 0:
-        //     images.push(imageExample.getDeodorant1());
-        //     break;
-        //   case 1:
-        //     images.push(imageExample.getDeodorant2());
-        //     break;
-        //   default:
-        //     images.push(imageExample.getDeodorant3());
-        //     break;
-        // }
-
-        //-------- ESMALTE --------
-        // switch (index) {
-        //   case 0:
-        //     images.push(imageExample.getNail1());
-        //     break;
-        //   default:
-        //     images.push(imageExample.getNail2());
-        //     break;
-        // }
       })
     );
+
     setIsLoading(false);
     setNoBgImages(images);
     shouldEdit(!containError);
@@ -151,9 +102,24 @@ export default function UploadMode({ shouldShowToolBar, shouldEdit }) {
     shouldEdit(false);
   };
 
+  const handlePassword = async (event) => {
+    event.preventDefault();
+    const response = await passwordService.verifyPassword('1234');
+    console.log(response);
+  };
+
   return (
     <div>
-      {!isLoading && !noBgImages.length && <Upload onUpload={handleUpload} />}
+      {!isCorrectPassword && (
+        <Password onSubmit={handlePassword}>
+          <TextField placeholder="Digite a senha" />
+          <Verify onClick={handlePassword}>Verificar</Verify>
+        </Password>
+      )}
+
+      {!!isCorrectPassword && !isLoading && !noBgImages.length && (
+        <Upload onUpload={handleUpload} />
+      )}
 
       {!!uploadedFiles.length && !noBgImages.length && (
         <FileList

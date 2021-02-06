@@ -1,16 +1,8 @@
 import React, { useState } from 'react';
-import { uniqueId } from 'lodash';
-import filesize from 'filesize';
 
 import GlobalStyle from './styles/global';
 import { Container, Content } from './styles';
 
-import Upload from './components/Upload/upload';
-import FileList from './components/FileList/FileList';
-import CompositionMaster from './components/CompositionMaster';
-
-import * as api from './services/removeBgService';
-import imageExample from './services/base64Example';
 import ModeSelector from './components/ModeSelector';
 import TestMode from './components/TestMode';
 import UploadMode from './components/UploadMode';
