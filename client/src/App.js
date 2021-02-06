@@ -38,7 +38,12 @@ function App() {
         {!!showToolBar && (
           <ModeSelector handleChange={handleModeChange} mode={mode} />
         )}
-        {mode === 'test' && <TestMode />}
+        {mode === 'test' && (
+          <TestMode
+            shouldShowToolBar={handleShowToolBar}
+            shouldEdit={handleEditing}
+          />
+        )}
         {mode === 'upload' && (
           <UploadMode
             shouldShowToolBar={handleShowToolBar}
