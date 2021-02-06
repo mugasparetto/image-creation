@@ -3,7 +3,7 @@ import React, { useState } from 'react';
 import { uniqueId } from 'lodash';
 import filesize from 'filesize';
 
-import { Password, TextField, Verify } from './styles.js';
+import { Password, TextField, Verify, ErrorMessage } from './styles.js';
 
 import Upload from '../Upload/upload';
 import FileList from '../FileList/FileList';
@@ -18,6 +18,8 @@ export default function UploadMode({ shouldShowToolBar, shouldEdit }) {
   const [isLoading, setIsLoading] = useState(false);
   const [shouldShowError, setShouldShowError] = useState(false);
   const [isCorrectPassword, setIsCorrectPassword] = useState(false);
+  const [inputPassword, setInputPassword] = useState('');
+  const [isVerifyingPassword, setIsVerifyingPassword] = useState(false);
 
   const handleUpload = (files) => {
     const upFiles = files.map((file) => ({
@@ -100,21 +102,41 @@ export default function UploadMode({ shouldShowToolBar, shouldEdit }) {
     setUploadedFiles([]);
     shouldShowToolBar(true);
     shouldEdit(false);
+    setInputPassword('');
+    setIsCorrectPassword(false);
+    setShouldShowError(false);
   };
 
   const handlePassword = async (event) => {
     event.preventDefault();
-    const response = await passwordService.verifyPassword('1234');
-    console.log(response);
+    setIsVerifyingPassword(true);
+    const { data } = await passwordService.verifyPassword(inputPassword);
+    !data && setShouldShowError(true);
+    setIsVerifyingPassword(false);
+    setIsCorrectPassword(data);
   };
 
   return (
     <div>
       {!isCorrectPassword && (
         <Password onSubmit={handlePassword}>
-          <TextField placeholder="Digite a senha" />
-          <Verify onClick={handlePassword}>Verificar</Verify>
+          <TextField
+            placeholder="Digite a senha"
+            onChange={({ target }) => {
+              setShouldShowError(false);
+              setInputPassword(target.value);
+            }}
+            disabled={isVerifyingPassword}
+            type="password"
+          />
+          <Verify onClick={handlePassword} disabled={isVerifyingPassword}>
+            Verificar
+          </Verify>
         </Password>
+      )}
+
+      {!isCorrectPassword && shouldShowError && (
+        <ErrorMessage>Senha incorreta</ErrorMessage>
       )}
 
       {!!isCorrectPassword && !isLoading && !noBgImages.length && (

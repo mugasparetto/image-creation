@@ -26,13 +26,6 @@ app.use(express.static(path.join(__dirname, 'client/build')));
 app.use('/api/', removeBgRouter);
 app.use('/password/', passwordRouter);
 
-app.get('/password/', (_, response) => {
-  response.send({
-    message:
-      'Bem-vindo à API de lançamentos. Acesse /transaction e siga as orientações',
-  });
-});
-
 const APP_PORT = 8080;
 
 app.listen(APP_PORT, () => {

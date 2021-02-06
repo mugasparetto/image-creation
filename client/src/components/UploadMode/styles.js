@@ -23,4 +23,16 @@ export const Verify = styled.button`
 
   background: #0076d6;
   color: white;
+
+  :disabled {
+    background: #ccc;
+    cursor: default;
+  }
+`;
+
+export const ErrorMessage = styled.p`
+  margin-top: 16px;
+  color: #e57878;
+  font-weight: bold;
+  font-size: 14px;
 `;
