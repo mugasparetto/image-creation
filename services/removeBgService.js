@@ -5,7 +5,6 @@ const API_URL = 'https://api.remove.bg/v1.0/removebg';
 
 const getImageWithoutBg = async (req, res, next) => {
   const { imageString } = req.body;
-  // console.log(req.body);
   try {
     const response = await axios.post(
       API_URL,
@@ -26,7 +25,6 @@ const getImageWithoutBg = async (req, res, next) => {
         responseEncoding: 'utf8',
       }
     );
-    // console.log(response);
     res.send(response.data);
   } catch (error) {
     next(error);

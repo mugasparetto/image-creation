@@ -72,7 +72,7 @@ export default function UploadMode({ shouldShowToolBar, shouldEdit }) {
         }
         const string =
           'data:image/png;base64,' + arrayBufferToBase64(response.data);
-        console.log(string);
+        // console.log(string);
         images.push(string);
       })
     );
