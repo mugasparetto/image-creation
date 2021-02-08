@@ -20,10 +20,11 @@ export default function TestMode({ shouldShowToolBar, shouldEdit }) {
 
   const handleDiaperClick = () => {
     setTestImages([
-      imageExample.getDiaper1(),
-      imageExample.getDiaper2(),
-      imageExample.getDiaper3(),
-      imageExample.getDiaper4(),
+      process.env.PUBLIC_URL + 'diaperExamples/diaper1.png',
+      // imageExample.getDiaper1(),
+      // imageExample.getDiaper2(),
+      // imageExample.getDiaper3(),
+      // imageExample.getDiaper4(),
     ]);
     shouldShowToolBar(false);
     shouldEdit(true);
