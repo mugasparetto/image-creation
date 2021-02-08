@@ -21,10 +21,9 @@ export default function TestMode({ shouldShowToolBar, shouldEdit }) {
   const handleDiaperClick = () => {
     setTestImages([
       process.env.PUBLIC_URL + 'diaperExamples/diaper1.png',
-      // imageExample.getDiaper1(),
-      // imageExample.getDiaper2(),
-      // imageExample.getDiaper3(),
-      // imageExample.getDiaper4(),
+      process.env.PUBLIC_URL + 'diaperExamples/diaper2.png',
+      process.env.PUBLIC_URL + 'diaperExamples/diaper3.png',
+      process.env.PUBLIC_URL + 'diaperExamples/diaper4.png',
     ]);
     shouldShowToolBar(false);
     shouldEdit(true);
@@ -60,25 +59,25 @@ export default function TestMode({ shouldShowToolBar, shouldEdit }) {
             <Image
               imgUrl={process.env.PUBLIC_URL + '/dove_shampoo.jpg'}
             ></Image>
-            <span style={{ fontSize: '14px' }}>Shapoos</span>
+            <span style={{ fontSize: '14px' }}>Shapoos - HD</span>
           </Button>
           <Button onClick={handleDiaperClick}>
             <Image
               imgUrl={process.env.PUBLIC_URL + '/fralda-pom-pom.jpg'}
             ></Image>
-            <span style={{ fontSize: '14px' }}>Fraldas</span>
+            <span style={{ fontSize: '14px' }}>Fraldas - HD</span>
           </Button>
           <Button onClick={handleDeodorantClick}>
             <Image
               imgUrl={process.env.PUBLIC_URL + '/desodorante-rexona.jpg'}
             ></Image>
-            <span style={{ fontSize: '14px' }}>Desodorantes</span>
+            <span style={{ fontSize: '14px' }}>Desodorantes - Preview</span>
           </Button>
           <Button onClick={handleNailsClick}>
             <Image
               imgUrl={process.env.PUBLIC_URL + '/esmalte_amanha.jpg'}
             ></Image>
-            <span style={{ fontSize: '14px' }}>Esmaltes</span>
+            <span style={{ fontSize: '14px' }}>Esmaltes - Preview</span>
           </Button>
         </Container>
       )}
